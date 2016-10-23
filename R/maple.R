@@ -33,6 +33,19 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
                   num.draws = 1000, ax = NULL, num.threads = parallel::detectCores(), 
                   verbose = TRUE) {
     
+    if (is.null(rownames(deaths))) {
+        message("Death rates matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
+        rownames(deaths) <- seq(0, 85, 5)    
+    }
+    if (is.null(rownames(population))) {
+        message("Population matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
+        rownames(population) <- seq(0, 85, 5)    
+    }
+    if (is.null(rownames(deaths))) {
+        message("5ax values matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
+        rownames(ax) <- seq(0, 85, 5)    
+    }
+    
     check_maple_data_format(deaths, population, ax)
     
     if (holdout < 13) warning("Holdout period too short, some models may fail to run.")
