@@ -27,7 +27,7 @@ check_maple_data_format <- function(...) {
         if (!is.null(rownames(m))  && !identical(rownames(m), as.character(seq(0, 85, 5)))) {
             stop("Row names of data matrices must be set to age groups 0, 5,..., 80, 85+.")
         }
-        if (is.null(rownames(m)) || !all(as.integer(colnames(m)) == colnames(m))) {
+        if (is.null(colnames(m)) || !all(as.integer(colnames(m)) == colnames(m))) {
             stop("Column names of data matrices data must be set to the years of data.")
         }
     }
