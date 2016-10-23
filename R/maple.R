@@ -26,9 +26,9 @@
 #' data(maple.deaths)
 #' data(maple.population)
 #' data(maple.ax)
-#' model <- maple_models()[c(1, 20)]
+#' models <- maple_models()[c(1, 20)]
 #' maple(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, 
-#'       holdout = 13, models = model, ax = maple.ax)
+#'       holdout = 13, models = models, ax = maple.ax)
 maple <- function(deaths, population, forecast.horizon, holdout, models = maple_models(),
                   num.draws = 1000, ax = NULL, num.threads = parallel::detectCores(), 
                   verbose = TRUE) {
@@ -39,7 +39,7 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
     }
     if (is.null(rownames(population))) {
         message("Population matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
-        rownames(population) <- seq(0, 85, 5)    
+        rownames(population) <- seq(0, 85, 5)
     }
     if (is.null(rownames(deaths))) {
         message("5ax values matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")

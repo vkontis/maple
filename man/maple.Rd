@@ -49,8 +49,8 @@ Produce model averaged projections of death rates and life expectancy.
 data(maple.deaths)
 data(maple.population)
 data(maple.ax)
-model <- maple_models()[c(1, 20)]
+models <- maple_models()[c(1, 20)]
 maple(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, 
-      holdout = 13, models = model, ax = maple.ax)
+      holdout = 13, models = models, ax = maple.ax)
 }
 
