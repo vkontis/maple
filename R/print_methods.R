@@ -1,3 +1,4 @@
+#' @export
 print.maple.bma <- function(d) {
     cat("Model averaged projections of mortality and life expectancy between", 
         min(d$fitted.values$year), "and", paste0(max(d$fitted.values$year), "."), "\n")
@@ -6,6 +7,7 @@ print.maple.bma <- function(d) {
     invisible(d)
 }
 
+#' @export
 print.inla.model <- function(m) {
     cat("Model", m$name, ": ")
     cat(m$desc, "\n")
@@ -16,6 +18,7 @@ print.inla.model <- function(m) {
     invisible(m)
 }
 
+#' @export
 print.lc.model <- function(m) {
     cat("Model", m$name, ": ")
     cat(m$desc, "\n")

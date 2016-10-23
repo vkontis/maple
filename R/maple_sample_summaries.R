@@ -1,3 +1,4 @@
+#' @export
 maple_sample_summaries <- function(samples) {
 
     rate.samples <- do.call(cbind, lapply(samples$death.rates, as.vector))

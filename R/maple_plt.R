@@ -1,3 +1,4 @@
+#' @export
 kt_extension <- function(lx70) {
     # lx70: lx for 70 and older (should have 4 rows - one for each age group
     # 70-74, 75-79, 80-84, 85+ and as many columns as years)
@@ -84,6 +85,7 @@ kt_extension <- function(lx70) {
     ax70
 }
 
+#' @export
 maple_plt <- function(death.rates, ax = NULL, check.conv = FALSE, full.table = FALSE) {
     # Generate a period life table for the supplied inputs
     # age: vector of age groups, 0, 5, 10, ..., 80, 85 (may be repeated
@@ -212,6 +214,7 @@ maple_plt <- function(death.rates, ax = NULL, check.conv = FALSE, full.table = F
     data.frame(age = age, year = year, mx = mx, qx = qx, ex = ex)
 }
 
+#' @export
 plt_ex <- function(plt, x = 0) {
     if (!all(c("age", "year", "ex") %in% names(plt))) {
         stop("Life table must include 'age', 'year', 'ex' columns.")
@@ -219,6 +222,7 @@ plt_ex <- function(plt, x = 0) {
     setNames(plt[plt$age == x, ]$ex, plt[plt$age == x, ]$year)
 }
 
+#' @export
 plt_qx <- function(plt, x = 70) { 
     if (!all(c("age", "year", "ex") %in% names(plt))) {
         stop("Life table must include 'age', 'year', 'ex' columns.")
@@ -229,6 +233,7 @@ plt_qx <- function(plt, x = 70) {
     setNames(calculate_pod(m), plt[plt$age == x, ]$year)
 }
 
+#' @export
 calculate_pod <- function(m) {
     # m matrix of age x year qx
     1 - Reduce(`*`, as.data.frame(1 - t(m)))

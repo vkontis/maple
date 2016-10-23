@@ -1,3 +1,4 @@
+#' @export
 maple_projection_error <- function(deaths, population, ax = NULL, fitted.rates) {
     
     if (!all(dim(deaths) == dim(population) & 

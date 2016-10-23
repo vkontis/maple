@@ -1,7 +1,9 @@
+#' @export
 maple_sample <- function(model.fit, num.draws, forecast.horizon, ax, ...) {
     UseMethod("maple_sample")
 }
 
+#' @export
 maple_sample.inla <- function(model.fit, num.draws, ax = NULL, ...) {
     log.rate.draws <- inla.posterior.sample(num.draws, model.fit)
     rate.draws <- lapply(log.rate.draws, function(draw) {
@@ -18,6 +20,7 @@ maple_sample.inla <- function(model.fit, num.draws, ax = NULL, ...) {
     l
 }
 
+#' @export
 maple_sample.lc <- function(model.fit, num.draws, forecast.horizon, ax = NULL, ...) {
     log.rate.draws <- replicate(num.draws,
                        model.fit$alphas + Reduce(`+`, lapply(seq(model.fit$num.pcs),

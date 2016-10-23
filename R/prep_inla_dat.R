@@ -1,12 +1,13 @@
+#' Format data to run INLA model.
+#' @export
+#' @keywords internal
 prep_inla_dat <- function(deaths, population, model, forecast.horizon) {
-
     dat <- data.frame(
         year = rep(as.numeric(colnames(deaths)), each = nrow(deaths)),
         age = rep(as.numeric(rownames(deaths)), ncol(deaths)),
         deaths = as.vector(deaths),
         population = as.vector(population)
     )
-
     dat$death.rate <- dat$deaths / dat$population
     dat$forecast.period <- FALSE
     forecast.years <- max(dat$year) + seq(forecast.horizon)
@@ -17,7 +18,6 @@ prep_inla_dat <- function(deaths, population, model, forecast.horizon) {
         d$forecast.period <- TRUE
         d
     })
-
     forecast.dat <- do.call(rbind, forecast.dat)
     inla.dat <- rbind(dat, forecast.dat)
     inla.dat$cohort <- inla.dat$year - inla.dat$age

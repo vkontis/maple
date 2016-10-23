@@ -1,3 +1,4 @@
+#' @export
 maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = maple_models(),
                           num.draws = 1000, ax = NULL, num.threads = parallel::detectCores(), 
                           verbose = TRUE) {
