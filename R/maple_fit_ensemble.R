@@ -2,60 +2,59 @@ maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = ma
                           num.draws = 1000, ax = NULL, num.threads = parallel::detectCores(), 
                           verbose = TRUE) {
 
-    # TODO add error handling for rownames deaths rownames pop etc
-    # check they are sorted check dim names actually exist
-    # force ages to be 0, .. , 85
     model.fits <- lapply(seq_along(models), function(m) {
-        if (verbose) {
-            cat("Fitting model ", models[[m]]$name, "...\n")
-        }
+        if (verbose) message("Fitting model ", models[[m]]$name, "...")
         tryCatch(
             maple_fit_model(model = models[[m]], 
                             deaths = deaths,
                             population = population,
                             forecast.horizon = forecast.horizon, 
                             num.threads = num.threads),
-            error = function(e) {cat("Error:", e$message, "\n"); return(e)}
+            error = function(e) {message("Error:", e$message); return(e)}
         )
     })
+    names(model.fits) <- names(models)
     
-    fitted.rates <- lapply(seq_along(models), function(i) fitted_rates_matrix(model.fits[[i]]))
-    names(model.fits) <- names(fitted.rates) <- names(models)
-        
+    fitted.values <- lapply(seq_along(model.fits), function(m) {
+            model.fit <- model.fits[[m]]
+            rates <- fitted_rates_matrix(model.fit)
+            d <- data.frame(model = names(model.fits)[m], year = as.numeric(colnames(rates)))
+            d[, paste0("rate_", seq(0, 85, 5))] <- t(rates)
+            plt <- maple_plt(rates, ax, full.table = FALSE)
+            d$e0 <- plt_ex(plt, 0)
+            d$e65 <- plt_ex(plt, 65)
+            d$q70 <- plt_qx(plt, 70)
+            d
+        })
+    fitted.values <- do.call(rbind, fitted.values)
+
     samples <- summaries <- NULL
     if (num.draws > 0) {
         samples <- lapply(seq_along(models), function(m) {
-            if (verbose) {
-                cat("Sampling draws for model ", models[[m]]$name, "...\n")
-            }
+            if (verbose) message("Sampling draws for model ", models[[m]]$name, "...")
             tryCatch(
                 maple_sample(model.fit = model.fits[[m]], 
                              num.draws = num.draws, 
                              forecast.horizon = forecast.horizon, 
                              ax = ax),
-                error = function(e) {cat("Error:", e$message, "\n"); return(e)}
+                error = function(e) {message("Error:", e$message); return(e)}
             )
         })
+        names(samples) <- names(models)
+        
         sample.summaries <- lapply(seq_along(models), function(m) {
-            if (verbose) {
-                cat("Calculating summary statistics for model ", models[[m]]$name, "...\n")
-            }
+            if (verbose) message("Calculating summary statistics for model ", models[[m]]$name, "...")
             tryCatch(
-                maple_sample_summaries(samples[[m]]),
-                error = function(e) {cat("Error:", e$message, "\n"); return(e)}
+                data.frame(model = names(models)[m], maple_sample_summaries(samples[[m]])),
+                error = function(e) {message("Error:", e$message); return(e)}
             )
         })
-        names(samples) <- names(sample.summaries) <- names(models)
+        sample.summaries <- do.call(rbind, sample.summaries)
     }
     list(
-        deaths = deaths, 
-        population = population, 
-        forecast.horizon = forecast.horizon,
-        models = models,
-        fitted.rates = fitted.rates, 
-        model.fits = model.fits,
-        samples = samples,
+        fitted.values = fitted.values, 
         sample.summaries = sample.summaries,
-        num.draws = num.draws
+        samples = samples,
+        model.fits = model.fits
     )
 }

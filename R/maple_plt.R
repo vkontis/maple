@@ -104,15 +104,16 @@ maple_plt <- function(death.rates, ax = NULL, check.conv = FALSE, full.table = F
     #     2001.
     # check.conv: If TRUE, it will test that the iterative procedure to estimate
     #     ax (see above) has converged
-    mx <- as.vector(death.rates)
     year <- rep(as.numeric(colnames(death.rates)), each = nrow(death.rates))
     age <- rep(as.numeric(rownames(death.rates)), ncol(death.rates))
-
+    mx <- as.vector(death.rates)
+    
     if (is.null(ax)) {
         ax <- ifelse(age == 0, .5, 2.5)
-    } else {
-        ax <- as.vector(ax)
+    } else if (ncol(ax) < ncol(death.rates)) {
+        ax <- ax[, c(seq(1, ncol(ax)), rep(ncol(ax), ncol(death.rates) - ncol(ax)))]
     }
+    ax <- as.vector(ax)
 
     # Remove NA rates (this is useful when eg a given year has no mortality data;
     # the removed entries are re-inserted as NAs at the end of the function call)

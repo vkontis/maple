@@ -62,7 +62,6 @@ prep_inla_dat <- function(deaths, population, model, forecast.horizon) {
         inla.dat[vars.b] <- ifelse(inla.dat$year <= maxyear, 0, inla.dat$yearc1 - maxyearc)
     }
 
-    # inla.dat <- left_join(inla.dat, .Read5a0Data(), by = c("iso3", "sex", "year", "age"))
     inla.dat
 }
 

@@ -1,10 +1,11 @@
+#' @export
 maple_fit_model <- function(model, deaths, population, forecast.horizon, num.threads, ...) {
-    
     UseMethod("maple_fit_model")
 }
 
 maple_fit_model.inla.model <- function(model, deaths, population, forecast.horizon,
-                                       num.threads, ...) {
+                                       num.threads = parallel::detectCores(), ...) {
+    require(INLA)
     inla.dat <- prep_inla_dat(deaths = deaths, 
                               population = population,
                               model = model,
