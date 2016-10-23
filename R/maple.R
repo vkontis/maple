@@ -41,7 +41,7 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
         message("Population matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
         rownames(population) <- seq(0, 85, 5)
     }
-    if (is.null(rownames(deaths))) {
+    if (is.null(rownames(ax))) {
         message("5ax values matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
         rownames(ax) <- seq(0, 85, 5)    
     }
