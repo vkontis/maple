@@ -1,4 +1,28 @@
+#' Fit a single forecasting model.
 #' @export
+#' @param model A forecasting model. See ?maple_models for more details.
+#' @param deaths A matrix of death counts, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+ 
+#' and one column for each year of available data. The column names of the matrix must be the years of data.
+#' @param population A matrix of mid-year population numbers, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+ 
+#' and one column for each year of available data. The column names of the matrix must be the years of data.
+#' @param forecast.horizon The number of years to produce projections for.  
+#' @param num.threads The number of threads to use when running the models. This is passed to the INLA 
+#' methods. If not specified, then the maximum number of threads available on the computer is used.
+#' @return If the model is fitted using INLA, an INLA object. See ?INLA::inla for more details. 
+#' For Lee Carter models, a list is returned with the following entries
+#' \describe{
+#'   \item{logrates:}{The logarithm of the fitted death rates.}
+#'   \item{rates:}{The fitted death rates.}
+#'   \item{alphas:}{The intercepts.}
+#'   \item{betas:}{The age-specific components in the Lee Carter model. This is a matrix whose columns correspond to age groups and rows to principal components.}
+#'   \item{gammas:}{The time-varying components in the Lee Carter model. This is a matrix whose columns correspond to years and rows to principal components.}
+#'   \item{gammas.fit:}{A list of length equal to the number of principal components. Each item in the list is the random walk fitted as an Arima object; see ?stats::arima for more details.}
+#'   \item{gammas.pred:}{The extrapolated values of gammas.fit used for projections.}
+#'   \item{pct.var:}{The proportion of variance explained by the principal component decomposition.}
+#'   \item{num.pcs:}{The number of principal components used.}
+#' }
+#' @examples 
+#' maple_fit_model(maple_models()[[1]], deaths = maple.deaths, population = maple.population, forecast.horizon = 20)
 maple_fit_model <- function(model, deaths, population, forecast.horizon, num.threads, ...) {
     UseMethod("maple_fit_model")
 }

@@ -189,12 +189,13 @@ maple_models <- function(fixed.prec = 0.001,
     lc.models <- lapply(seq(5), function(n) {
         m <- list(
             name = paste0("LC_", n, "PC"),
-            desc = paste0("Lee-Carter model with ", n, " principal components."),
+            desc = paste0("Lee-Carter model with ", n, " principal component", 
+                    ifelse(n > 1, "s", ""), "."),
             num.pcs = n
         )
         class(m) <- "lc.model"
         m
     })
     l <- c(models, wl.models, lc.models)
-    l <- setNames(l, sapply(l, `[[`, "name"))
+    setNames(l, sapply(l, `[[`, "name"))
 }

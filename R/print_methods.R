@@ -7,7 +7,7 @@ print.maple.bma <- function(d) {
 }
 
 print.inla.model <- function(m) {
-    cat("Model", m$name, "\n")
+    cat("Model", m$name, ": ")
     cat(m$desc, "\n")
     cat("Formula:\n")
     print(m$fml)
@@ -17,8 +17,7 @@ print.inla.model <- function(m) {
 }
 
 print.lc.model <- function(m) {
-    cat("Model", m$name, "\n")
+    cat("Model", m$name, ": ")
     cat(m$desc, "\n")
-    cat("Number of principal components:", m$num.pcs, "\n")
     invisible(m)
 }

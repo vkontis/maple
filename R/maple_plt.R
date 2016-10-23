@@ -1,8 +1,3 @@
-calculate_pod <- function(m) {
-    # m matrix of age x year qx
-    1 - Reduce(`*`, as.data.frame(1 - t(m)))
-}
-
 kt_extension <- function(lx70) {
     # lx70: lx for 70 and older (should have 4 rows - one for each age group
     # 70-74, 75-79, 80-84, 85+ and as many columns as years)
@@ -216,3 +211,26 @@ maple_plt <- function(death.rates, ax = NULL, check.conv = FALSE, full.table = F
                                       ex = ex, Tx = Tx, Lx = Lx, lx = lx))
     data.frame(age = age, year = year, mx = mx, qx = qx, ex = ex)
 }
+
+plt_ex <- function(plt, x = 0) {
+    if (!all(c("age", "year", "ex") %in% names(plt))) {
+        stop("Life table must include 'age', 'year', 'ex' columns.")
+    }
+    setNames(plt[plt$age == x, ]$ex, plt[plt$age == x, ]$year)
+}
+
+plt_qx <- function(plt, x = 70) { 
+    if (!all(c("age", "year", "ex") %in% names(plt))) {
+        stop("Life table must include 'age', 'year', 'ex' columns.")
+    }
+    plt1 <- plt[plt$age < x, ]
+    qx <- plt1$qx[order(plt1$year, plt1$age)]
+    m <- matrix(qx, ncol = length(unique(plt1$year)))
+    setNames(calculate_pod(m), plt[plt$age == x, ]$year)
+}
+
+calculate_pod <- function(m) {
+    # m matrix of age x year qx
+    1 - Reduce(`*`, as.data.frame(1 - t(m)))
+}
+
