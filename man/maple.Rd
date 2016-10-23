@@ -34,12 +34,12 @@ methods. If not specified, then the maximum number of threads available on the c
 \value{
 A list with the following entries
 \describe{
-  \item{model.weights}{The weights used to combine models into the model average.}
-  \item{fitted.values}{A data frame with columns rate_0, ..., rate_85, e0, e65, q70, holding the estimated
+  \item{model.weights:}{The weights used to combine models into the model average.}
+  \item{fitted.values:}{A data frame with columns rate_0, ..., rate_85, e0, e65, q70, holding the estimated
   death rates, life expectancy at birth and age 65 and probability of dying before age 70.}
-   \item{sample.summaries}{A data frame with holding statistical summary information for age-specific death rates, 
+   \item{sample.summaries:}{A data frame with holding statistical summary information for age-specific death rates, 
    life expectancy at birth and age 65, and probability of dying before age 70, calculated from the posterior draws.}
-  \item{samples}{List containing posterior draws for death rates and life tables}
+  \item{samples:}{List containing posterior draws for death rates and life tables.}
 }
 }
 \description{
@@ -51,6 +51,6 @@ data(maple.population)
 data(maple.ax)
 model <- maple_models()[c(1, 20)]
 maple(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, 
-      holdout = 13, models = model, ax = ax)
+      holdout = 13, models = model, ax = maple.ax)
 }
 

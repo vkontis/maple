@@ -1,4 +1,19 @@
-# TODO model desc, name
+#' Generate a list of forecasting models.
+#' @export
+#' @param fixed.prec The precision on the fixed effects (common intercept and slope) normal priors.
+#' @param gamma.shape The shape parameter for the loggamma prior on the random effects. See ?INLA::inla.models for more details.
+#' @param gamma.rate The rate (inverse scale) parameter for the loggamma prior on the random effects. See ?INLA::inla.models for more details.
+#' @return A list of forecasting models. Each model is a list with the following entries
+#' \describe{
+#'   \item{name:}{A short name to identify the model.}
+#'   \item{desc:}{A description of the model.}
+#'   \item{fml:}{(only for models fitted in INLA) The formula passed to INLA when running the model.}
+#'   \item{likelihood.weight.rate:}{(only for weighted likelihood models) The rate used when calculating the likelihood weights. See ?calc_likelihood_weights for more details.}
+#'   \item{num.pcs:}{(only for Lee-Carter models) The number of principal components.}
+#' }
+#' @examples 
+#' maple_models()[c(1, 20)]
+#' maple_models(fixed.prec = 1e-5, gamma.shape = .1, gamma.rate = .1)
 maple_models <- function(fixed.prec = 0.001,
                         gamma.shape = 1,
                         gamma.rate = 1e-3) {
@@ -8,7 +23,7 @@ maple_models <- function(fixed.prec = 0.001,
     models <- list(
         list(
             name = "IIDAGE",
-            desc = "",
+            desc = "Age-period model with iid age intercepts and slopes.",
             fml = 'deaths ~
             f(age.id1, model = "iid", hyper = hpr) +
             f(yearc1, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -18,7 +33,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "RW1AGE",
-            desc = "",
+            desc = "Age-period model with first order random walk age intercepts and slopes.",
             fml = 'deaths ~
             f(age.id1, model = "rw1", hyper = hpr) +
             f(yearc1, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -28,7 +43,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "IIDAGE_RW1COH",
-            desc = "",
+            desc = "Age-period-cohort model with iid age intercepts and slopes and first order random walk cohort slopes.",
             fml = 'deaths ~
             f(age.id1, model = "iid", hyper = hpr) +
             f(yearc1, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -39,7 +54,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "RW1AGE_RW1COH",
-            desc = "",
+            desc = "Age-period-cohort model with first order random walk age intercepts and slopes and first order random walk cohort slopes.",
             fml = 'deaths ~
             f(age.id1, model = "rw1", hyper = hpr) +
             f(yearc1, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -50,7 +65,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL10_IIDAGE",
-            desc = "",
+            desc = "Age-period model with iid age intercepts and slopes, using piecewise linear slopes with knot 10 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "iid", hyper = hpr) +
             f(yearc1.10a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -62,7 +77,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL10_RW1AGE",
-            desc = "",
+            desc = "Age-period model with first order random walk age intercepts and slopes, using piecewise linear slopes with knot 10 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "rw1", hyper = hpr) +
             f(yearc1.10a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -74,7 +89,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL6_IIDAGE",
-            desc = "",
+            desc = "Age-period model with iid age intercepts and slopes, using piecewise linear slopes with knot 6 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "iid", hyper = hpr) +
             f(yearc1.6a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -86,7 +101,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL6_RW1AGE",
-            desc = "",
+            desc = "Age-period model with first order random walk age intercepts and slopes, using piecewise linear slopes with knot 6 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "rw1", hyper = hpr) +
             f(yearc1.6a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -98,7 +113,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL10_IIDAGE_RW1COH",
-            desc = "",
+            desc = "Age-period-cohort model with iid age intercepts and slopes and first order random walk cohort slopes, using piecewise linear slopes with knot 10 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "iid", hyper = hpr) +
             f(yearc1.10a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -112,7 +127,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL10_RW1AGE_RW1COH",
-            desc = "",
+            desc = "Age-period-cohort model with first order random walk age intercepts and slopes and first order random walk cohort slopes, using piecewise linear slopes with knot 10 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "rw1", hyper = hpr) +
             f(yearc1.10a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -126,7 +141,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL6_IIDAGE_RW1COH",
-            desc = "",
+            desc = "Age-period-cohort model with iid age intercepts and slopes and first order random walk cohort slopes, using piecewise linear slopes with knot 6 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "iid", hyper = hpr) +
             f(yearc1.6a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -140,7 +155,7 @@ maple_models <- function(fixed.prec = 0.001,
         ),
         list(
             name = "PWL6_RW1AGE_RW1COH",
-            desc = "",
+            desc = "Age-period-cohort model with first order random walk age intercepts and slopes and first order random walk cohort slopes, using piecewise linear slopes with knot 6 years before the end of data.",
             fml = 'deaths ~
             f(age.id1, model = "rw1", hyper = hpr) +
             f(yearc1.6a, model = "linear", mean.linear = 0, prec.linear = fixed.prec) +
@@ -167,8 +182,10 @@ maple_models <- function(fixed.prec = 0.001,
     wl.models <- lapply(wl.models, function(x) {
         x$name <- paste0("WL0.05_", x$name)
         x$likelihood.weight.rate <- 0.05
+        x$desc <- paste0("Weighted likelihood ", tolower(substr(x$desc, 1, 1)), substr(x$desc, 2, nchar(x$desc)))
         x
     })
+
     lc.models <- lapply(seq(5), function(n) {
         m <- list(
             name = paste0("LC_", n, "PC"),
@@ -179,5 +196,5 @@ maple_models <- function(fixed.prec = 0.001,
         m
     })
     l <- c(models, wl.models, lc.models)
-    setNames(l, sapply(l, `[[`, "name"))
+    l <- setNames(l, sapply(l, `[[`, "name"))
 }
