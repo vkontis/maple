@@ -27,6 +27,7 @@ maple_fit_model <- function(model, deaths, population, forecast.horizon, num.thr
     UseMethod("maple_fit_model")
 }
 
+#' @export
 maple_fit_model.inla.model <- function(model, deaths, population, forecast.horizon,
                                        num.threads = parallel::detectCores(), ...) {
     require(INLA)
@@ -56,6 +57,7 @@ maple_fit_model.inla.model <- function(model, deaths, population, forecast.horiz
     fit
 }
 
+#' @export
 maple_fit_model.lc.model <- function(model, deaths, population, forecast.horizon, ...) {
     ages <- as.numeric(rownames(deaths))
     years <- as.numeric(colnames(deaths))
@@ -101,7 +103,8 @@ maple_fit_model.lc.model <- function(model, deaths, population, forecast.horizon
         gammas.fit = gammas.fit,
         gammas.pred = gammas.pred,
         pct.var = sum(clogrates.svd$d[seq_len(model$num.pcs)] ^ 2 / sum(clogrates.svd$d ^ 2)),
-        num.pcs = model$num.pcs
+        num.pcs = model$num.pcs,
+		forecast.horizon = forecast.horizon
     )
     class(l) <- c(class(l), "lc")
     l

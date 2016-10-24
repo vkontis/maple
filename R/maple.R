@@ -18,7 +18,7 @@
 #'   \item{model.weights:}{The weights used to combine models into the model average.}
 #'   \item{fitted.values:}{A data frame with columns rate_0, ..., rate_85, e0, e65, q70, holding the estimated
 #'   death rates, life expectancy at birth and age 65 and probability of dying before age 70.}
-#'    \item{sample.summaries:}{A data frame with holding statistical summary information for age-specific death rates, 
+#'   \item{sample.summaries:}{A data frame with holding statistical summary information for age-specific death rates, 
 #'    life expectancy at birth and age 65, and probability of dying before age 70, calculated from the posterior draws.}
 #'   \item{samples:}{List containing posterior draws for death rates and life tables.}
 #' }

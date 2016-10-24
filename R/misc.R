@@ -1,4 +1,3 @@
-#' @export
 calculate_row_summaries <- function(m) {
     qs <- apply(m, 1, quantile, probs = c(0.025, 0.5, 0.975))
     data.frame(
@@ -10,7 +9,6 @@ calculate_row_summaries <- function(m) {
     )
 }
 
-#' @export
 check_maple_data_format <- function(...) {
     l <- list(...)
     l <- Filter(Negate(is.null), l)

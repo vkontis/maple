@@ -36,7 +36,6 @@ maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = ma
             tryCatch(
                 maple_sample(model.fit = model.fits[[m]], 
                              num.draws = num.draws, 
-                             forecast.horizon = forecast.horizon, 
                              ax = ax),
                 error = function(e) {message("Error:", e$message); return(e)}
             )
