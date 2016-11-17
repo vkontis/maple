@@ -1,3 +1,4 @@
+#' Calculate projection error
 #' @export
 maple_projection_error <- function(deaths, population, ax = NULL, fitted.rates) {
     

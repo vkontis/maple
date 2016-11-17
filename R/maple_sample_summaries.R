@@ -1,5 +1,4 @@
 #' Given a list of posterior samples of death rates and life tables, generate summaries for death rates, life expectancy at birth and at age 65, and probability of dying before age 70.
-#' @export
 #' @param samples Posterior sample draws produced with maple_sample().
 #' @return A data frame containing the mean, median, sd and 95% credible interval, for the following metrics
 #' \describe{
@@ -8,32 +7,21 @@
 #'   \item{e65:}{Life expectancy at age 65.}
 #'   \item{q70:}{Probability of dying before age 70.}
 #' }
+#' @export
 maple_sample_summaries <- function(samples) {
-    rate.samples <- do.call(cbind, lapply(samples$death.rates, as.vector))
-    rate.summaries <- data.frame(
-        year = rep(as.numeric(colnames(samples$death.rates[[1]])),
-                   each = nrow(samples$death.rates[[1]])), 
-        metric = paste0("rate_", seq(0, 85, 5)), 
-        calculate_row_summaries(rate.samples))
     
-    e0.samples <- do.call(cbind, lapply(samples$plts, plt_ex, x = 0))
-    e0.summaries <- data.frame(
-        year = unique(samples$plts[[1]]$year),
-        metric = "e0", 
-        calculate_row_summaries(e0.samples))
+    rate.samples <- do.call(cbind, lapply(samples, `[[`, "mx"))
+    ex.samples <- do.call(cbind, lapply(samples, `[[`, "ex"))
+    qx.samples <- do.call(cbind, lapply(samples, `[[`, "qx"))
     
-    e65.samples <- do.call(cbind, lapply(samples$plts, plt_ex, x = 0))
-    e65.summaries <- data.frame(
-        year = unique(samples$plts[[1]]$year),
-        metric = "e65", 
-        calculate_row_summaries(e65.samples))
-    
-    q70.samples <- do.call(cbind, lapply(samples$plts, plt_qx, x = 70))
-    q70.summaries <- data.frame(
-        year = unique(samples$plts[[1]]$year),
-        metric = "q70", 
-        calculate_row_summaries(q70.samples))
-		
-    rbind(rate.summaries, e0.summaries, e65.summaries, q70.summaries)
+    rbind(data.frame(samples[[1]][c("year", "age")], 
+                     metric = "rate", 
+                     calculate_row_summaries(rate.samples)),
+          data.frame(samples[[1]][c("year", "age")], 
+                     metric = "ex", 
+                     calculate_row_summaries(ex.samples)),
+          data.frame(samples[[1]][c("year", "age")], 
+                     metric = "qx", 
+                     calculate_row_summaries(qx.samples)))
 }
 

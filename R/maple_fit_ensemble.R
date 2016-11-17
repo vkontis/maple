@@ -1,6 +1,7 @@
+#' Fit an ensemble of models
 #' @export
 maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = maple_models(),
-                          num.draws = 1000, ax = NULL, num.threads = parallel::detectCores(), 
+                          num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"), 
                           verbose = TRUE) {
 
     model.fits <- lapply(seq_along(models), function(m) {
@@ -19,12 +20,14 @@ maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = ma
     fitted.values <- lapply(seq_along(model.fits), function(m) {
             model.fit <- model.fits[[m]]
             rates <- fitted_rates_matrix(model.fit)
-            d <- data.frame(model = names(model.fits)[m], year = as.numeric(colnames(rates)))
-            d[, paste0("rate_", seq(0, 85, 5))] <- t(rates)
+            # d[, paste0("rate_", seq(0, 85, 5))] <- t(rates)
             plt <- maple_plt(rates, ax, full.table = FALSE)
-            d$e0 <- plt_ex(plt, 0)
-            d$e65 <- plt_ex(plt, 65)
-            d$q70 <- plt_qx(plt, 70)
+            d <- data.frame(model = names(model.fits)[m],
+                            year = plt$year,
+                            age = plt$age, 
+                            rate = plt$mx, 
+                            ex = plt$ex, 
+                            qx = plt$qx)
             d
         })
     fitted.values <- do.call(rbind, fitted.values)

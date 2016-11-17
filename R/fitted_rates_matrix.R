@@ -10,13 +10,3 @@ fitted_rates_matrix <- function(model.fit) UseMethod("fitted_rates_matrix")
 fitted_rates_matrix.inla <- function(model.fit) inla_fitted_matrix(model.fit, "mean")
 
 fitted_rates_matrix.lc <- function(model.fit) model.fit$rates
-
-inla_fitted_matrix <- function(model.fit, variable) {
-    v <- model.fit$summary.fitted.values[[variable]]
-    v <- v[order(model.fit$.args$data$year, model.fit$.args$data$age)]
-    m <- matrix(v, nrow = length(unique(model.fit$.args$data$age)), 
-                ncol = length(unique(model.fit$.args$data$year)))
-    colnames(m) <- unique(model.fit$.args$data$year)
-    rownames(m) <- unique(model.fit$.args$data$age)
-    m
-}

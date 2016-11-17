@@ -1,4 +1,4 @@
-# Format data to run INLA model.
+#' Format data to run INLA model.
 prep_inla_dat <- function(deaths, population, model, forecast.horizon) {
     dat <- data.frame(
         year = rep(as.numeric(colnames(deaths)), each = nrow(deaths)),

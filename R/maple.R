@@ -1,6 +1,5 @@
 #' Produce model averaged projections of death rates and life expectancy.
-#' @export
-#' @param deaths A matrix of death counts, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+ 
+#' @param deaths A matrix of death counts, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+.
 #' and one column for each year of available data. The column names of the matrix must be the years of data.
 #' @param population A matrix of mid-year population numbers, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+ 
 #' and one column for each year of available data. The column names of the matrix must be the years of data.
@@ -8,8 +7,7 @@
 #' @param holdout The number of years of data to hold out when calculating model weights.
 #' @param models The individual models to be run and averaged.
 #' @param num.draws The number of posterior draws to sample and use for calculating statistical summaries.
-#' @param ax The number of years lived on average by those who die in their current age group. For example, if all deaths 
-#' in the age group 60-64 happened exactly at the middle of the age group, this would be equal to 2.5.
+#' @param ax The number of years lived on average by those who die in their current age group. For example, if all deaths in the age group 60-64 happened exactly at the middle of the age group, this would be equal to 2.5.
 #' @param num.threads The number of threads to use when running the models. This is passed to the INLA 
 #' methods. If not specified, then the maximum number of threads available on the computer is used.
 #' @param verbose If TRUE (the default), print some information on progress fitting models, etc.
@@ -29,9 +27,12 @@
 #' models <- maple_models()[c(1, 20)]
 #' bma <- maple(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, 
 #'       holdout = 13, models = models, ax = maple.ax)
+#' @export
 maple <- function(deaths, population, forecast.horizon, holdout, models = maple_models(),
-                  num.draws = 1000, ax = NULL, num.threads = parallel::detectCores(), 
+                  num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"), 
                   verbose = TRUE) {
+    
+    check_maple_data_format(deaths, population, ax)
     
     if (is.null(rownames(deaths))) {
         message("Death rates matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
@@ -41,12 +42,10 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
         message("Population matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
         rownames(population) <- seq(0, 85, 5)
     }
-    if (is.null(rownames(ax))) {
+    if (!is.null(ax) && is.null(rownames(ax))) {
         message("5ax values matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
         rownames(ax) <- seq(0, 85, 5)    
     }
-    
-    check_maple_data_format(deaths, population, ax)
     
     if (holdout < 13) warning("Holdout period too short, some models may fail to run.")
     
@@ -87,16 +86,17 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
     
     # Rates
     fitted.values.list <- split(
-        forecast.run.fits$fitted.values[-grep("model|year", names(forecast.run.fits$fitted.values))],
+        forecast.run.fits$fitted.values[-grep("model|year|age", names(forecast.run.fits$fitted.values))],
         forecast.run.fits$fitted.values$model
     )
     stopifnot(names(fitted.values.list) == names(model.weights))
     
     bma.fitted.values <- Reduce(`+`, Map(`*`, fitted.values.list, model.weights))
-    bma.fitted.values <- data.frame(year = unique(forecast.run.fits$fitted.values$year), bma.fitted.values)
+    bma.fitted.values <- data.frame(subset(forecast.run.fits$fitted.values, 
+                                           model == models[[1]]$name, 
+                                           select = c("year", "age")),
+                                    bma.fitted.values)
     
-    # Samples
-    # TODO check what happens if num draws < num models
     if (sum(round(model.weights * num.draws)) == num.draws) { 
         model.draws <- round(model.weights * num.draws)
     } else {
@@ -113,14 +113,9 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
         stopifnot(total.draws >=  model.draws[i])
         sample(total.draws, model.draws[i], replace = FALSE)
     })
-    bma.samples <- list(death.rates = NULL, plts = NULL) 
-    bma.samples$death.rates <- unlist(
+    bma.samples <- unlist(
         lapply(seq_along(forecast.run.fits$samples),
-               function(i) forecast.run.fits$samples[[i]]$death.rates[draw.idx[[i]]]), 
-        recursive = FALSE)
-    bma.samples$plts <- unlist(
-        lapply(seq_along(forecast.run.fits$samples),
-               function(i) forecast.run.fits$samples[[i]]$plts[draw.idx[[i]]]), 
+               function(i) forecast.run.fits$samples[[i]][draw.idx[[i]]]), 
         recursive = FALSE)
     
     bma.sample.summaries <- maple_sample_summaries(bma.samples)

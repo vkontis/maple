@@ -27,10 +27,8 @@ maple_fit_model <- function(model, deaths, population, forecast.horizon, num.thr
     UseMethod("maple_fit_model")
 }
 
-#' @export
 maple_fit_model.inla.model <- function(model, deaths, population, forecast.horizon,
-                                       num.threads = parallel::detectCores(), ...) {
-    require(INLA)
+                                       num.threads = inla.getOption("num.threads"), ...) {
     inla.dat <- prep_inla_dat(deaths = deaths, 
                               population = population,
                               model = model,
@@ -46,8 +44,6 @@ maple_fit_model.inla.model <- function(model, deaths, population, forecast.horiz
                 E = population,
                 control.predictor = list(link = 1),
                 control.compute = list(dic = TRUE, config = TRUE),
-                control.inla = list(strategy = "laplace", npoints = 50,
-                                    numint.maxfeval = 8e7),
                 weights = lhd.wght,
                 num.threads = num.threads
             )
@@ -57,7 +53,6 @@ maple_fit_model.inla.model <- function(model, deaths, population, forecast.horiz
     fit
 }
 
-#' @export
 maple_fit_model.lc.model <- function(model, deaths, population, forecast.horizon, ...) {
     ages <- as.numeric(rownames(deaths))
     years <- as.numeric(colnames(deaths))

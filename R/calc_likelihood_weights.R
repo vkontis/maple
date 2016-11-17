@@ -1,7 +1,7 @@
 #' Calculate likelihood weights.
 #' @export
 #' @param years A vector of the years that weights must be calculated for.
-#' @param weight.rate The rate used to calculate the weights. Each year y is assigned weight proportional to (1 - weight.rate) ^ (Y - year), where Y is the last year.
+#' @param weight.rate The rate used to calculate the weights. Each year y is assigned weight proportional to (1 - weight.rate) ^ (- year).
 #' @return A vector of weights. 
 #' @examples 
 #' calc_likelihood_weights(1980:2010, .05)
