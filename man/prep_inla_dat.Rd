@@ -9,5 +9,4 @@ prep_inla_dat(deaths, population, model, forecast.horizon)
 \description{
 Format data to run INLA model.
 }
-\keyword{internal}
 

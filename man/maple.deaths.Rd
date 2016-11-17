@@ -8,7 +8,6 @@
 \describe{
   \item{rows}{5-year age groups, 0-4, 5-9, ..., 80-84, 85+}
   \item{columns}{Year, 1960-2013}
-  ...
 }}
 \usage{
 maple.deaths

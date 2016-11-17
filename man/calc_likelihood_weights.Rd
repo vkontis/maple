@@ -9,7 +9,7 @@ calc_likelihood_weights(years, weight.rate)
 \arguments{
 \item{years}{A vector of the years that weights must be calculated for.}
 
-\item{weight.rate}{The rate used to calculate the weights. Each year y is assigned weight proportional to (1 - weight.rate) ^ (Y - year), where Y is the last year.}
+\item{weight.rate}{The rate used to calculate the weights. Each year y is assigned weight proportional to (1 - weight.rate) ^ (- year).}
 }
 \value{
 A vector of weights.
