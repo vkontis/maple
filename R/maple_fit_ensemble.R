@@ -8,6 +8,11 @@
 #' @param ax The number of years lived on average by those who die in their current age group. See ?maple_plt for more details. 
 #' @param num.threads The number of threads passed to INLA; see ?maple for more details.
 #' @param verbose If TRUE (the default), print some information on progress fitting models, etc.
+#' @return A list with the following entries
+#' \describe{
+#'   \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
+#'   \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
+#' }
 #' @export
 maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = maple_models(),
                           num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"),
@@ -29,44 +34,38 @@ maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = ma
         names = names(models)
     )
 
-    fitted.values <- lapply(seq_along(model.fits), function(m) {
-            model.fit <- model.fits[[m]]
-            rates <- fitted_rates_matrix(model.fit)
-            plt <- maple_plt(rates, ax, full.table = FALSE)
-            d <- data.frame(model = names(model.fits)[m],
-                            year = plt$year,
-                            age = plt$age,
-                            rate = plt$mx,
-                            ex = plt$ex,
-                            qx = plt$qx)
-            d
-        })
-    fitted.values <- do.call(rbind, fitted.values)
-
     samples <- summaries <- NULL
     if (num.draws > 0) {
-        samples <- lapply(seq_along(models), function(m) {
-            if (verbose) message("Sampling draws for model ", models[[m]]$name, "...")
-            tryCatch(
-                maple_sample(model.fit = model.fits[[m]],
-                             num.draws = num.draws,
-                             ax = ax),
-                error = function(e) {message("Error:", e$message); return(e)}
-            )
-        })
-        names(samples) <- names(models)
+        samples <- structure(lapply(seq_along(models), function(m) {
+                if (verbose) message("Sampling draws for model ", models[[m]]$name, "...")
+                tryCatch(
+                    maple_sample(model.fit = model.fits[[m]],
+                                 num.draws = num.draws,
+                                 ax = ax),
+                    error = function(e) {
+                            message("Error:", e$message)
+                            return(e)
+                        }
+                )
+            }),
+            names = names(models)
+        )
 
         sample.summaries <- lapply(seq_along(models), function(m) {
-            if (verbose) message("Calculating summary statistics for model ", models[[m]]$name, "...")
+            if (verbose) message("Calculating summary statistics for model ",
+                                 models[[m]]$name, "...")
             tryCatch(
-                data.frame(model = names(models)[m], maple_sample_summaries(samples[[m]])),
-                error = function(e) {message("Error:", e$message); return(e)}
+                data.frame(model = names(models)[m], 
+                           maple_sample_summaries(samples[[m]])),
+                error = function(e) {
+                        message("Error:", e$message)
+                        return(e)
+                    }
             )
         })
         sample.summaries <- do.call(rbind, sample.summaries)
     }
     list(
-        fitted.values = fitted.values,
         sample.summaries = sample.summaries,
         samples = samples,
         model.fits = model.fits

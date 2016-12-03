@@ -8,6 +8,32 @@ maple_fit_ensemble(deaths, population, forecast.horizon,
   models = maple_models(), num.draws = 1000, ax = NULL,
   num.threads = inla.getOption("num.threads"), verbose = TRUE)
 }
+\arguments{
+\item{deaths}{Deaths matrix; see ?maple for more details.}
+
+\item{population}{Population matrix; see ?maple for more details.}
+
+\item{forecast.horizon}{The number of years to produce projections for.}
+
+\item{models}{The individual models to be run; see ?maple_models for more details.}
+
+\item{num.draws}{The number of posterior draws to sample and use for calculating statistical summaries.}
+
+\item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
+
+\item{num.threads}{Number of threads passed to INLA; see ?maple for more details.}
+
+\item{verbose}{If TRUE (the default), print some information on progress fitting models, etc.}
+
+\item{num.threads}{The number of threads passed to INLA; see ?maple for more details.}
+}
+\value{
+A list with the following entries
+\describe{
+  \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
+  \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
+}
+}
 \description{
 Fit an ensemble of models
 }

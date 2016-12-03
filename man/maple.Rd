@@ -9,24 +9,21 @@ maple(deaths, population, forecast.horizon, holdout, models = maple_models(),
   num.threads = inla.getOption("num.threads"), verbose = TRUE)
 }
 \arguments{
-\item{deaths}{A matrix of death counts, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+.
-and one column for each year of available data. The column names of the matrix must be the years of data.}
+\item{deaths}{A matrix of death counts, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+ and one column for each year of available data. The column names of the matrix must be the years of data.}
 
-\item{population}{A matrix of mid-year population numbers, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+
-and one column for each year of available data. The column names of the matrix must be the years of data.}
+\item{population}{A matrix of mid-year population numbers, in the same row/column format as deaths.}
 
 \item{forecast.horizon}{The number of years to produce projections for.}
 
-\item{holdout}{The number of years of data to hold out when calculating model weights.}
+\item{holdout}{The number of years of data to hold out to calculate model weights.}
 
-\item{models}{The individual models to be run and averaged.}
+\item{models}{The individual models to be run and averaged; see ?maple_models for more details.}
 
 \item{num.draws}{The number of posterior draws to sample and use for calculating statistical summaries.}
 
-\item{ax}{The number of years lived on average by those who die in their current age group. For example, if all deaths in the age group 60-64 happened exactly at the middle of the age group, this would be equal to 2.5.}
+\item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
 
-\item{num.threads}{The number of threads to use when running the models. This is passed to the INLA
-methods. If not specified, then the maximum number of threads available on the computer is used.}
+\item{num.threads}{The number of threads to use when running the models. This is passed to the INLA methods. If not specified, then all available threads are used.}
 
 \item{verbose}{If TRUE (the default), print some information on progress fitting models, etc.}
 }
@@ -34,11 +31,7 @@ methods. If not specified, then the maximum number of threads available on the c
 A list with the following entries
 \describe{
   \item{model.weights:}{The weights used to combine models into the model average.}
-  \item{fitted.values:}{A data frame with columns rate_0, ..., rate_85, e0, e65, q70, holding the estimated
-  death rates, life expectancy at birth and age 65 and probability of dying before age 70.}
-  \item{sample.summaries:}{A data frame with holding statistical summary information for age-specific death rates,
-   life expectancy at birth and age 65, and probability of dying before age 70, calculated from the posterior draws.}
-  \item{samples:}{List containing posterior draws for death rates and life tables.}
+  \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}#'   \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
 }
 }
 \description{

@@ -1,4 +1,4 @@
-#' Given a life table, extract the life expectancy values for a given age.
+#' Extract the life expectancy values for a given age from a life table.
 #' @param plt A life table calculated by maple_plt().
 #' @param x The age group for which to extract life expectancy values.
 #' @return A named vector containing life expectancy values for each year.

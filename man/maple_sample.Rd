@@ -7,11 +7,11 @@
 maple_sample(model.fit, num.draws, ax, ...)
 }
 \arguments{
-\item{model.fit}{A fitted model.}
+\item{model.fit}{A model fitted using maple_fit_model().}
 
 \item{num.draws}{The number of samples.}
 
-\item{ax}{The number of years lived on average by those who die in their current age group. This is used to calculate life table samples from death rates.}
+\item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
 }
 \value{
 A list of life table draws, calculated using posterior samples of death rates.

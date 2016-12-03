@@ -2,7 +2,7 @@
 % Please edit documentation in R/plt_ex.R
 \name{plt_ex}
 \alias{plt_ex}
-\title{Given a life table, extract the life expectancy values for a given age.}
+\title{Extract the life expectancy values for a given age from a life table.}
 \usage{
 plt_ex(plt, x = 0)
 }
@@ -15,6 +15,6 @@ plt_ex(plt, x = 0)
 A named vector containing life expectancy values for each year.
 }
 \description{
-Given a life table, extract the life expectancy values for a given age.
+Extract the life expectancy values for a given age from a life table.
 }
 

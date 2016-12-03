@@ -2,7 +2,7 @@
 % Please edit documentation in R/plt_qx.R
 \name{plt_qx}
 \alias{plt_qx}
-\title{Given a life table, extract the probability of dying by a given age.}
+\title{Extract the probability of dying by a given age from a life table.}
 \usage{
 plt_qx(plt, x = 70)
 }
@@ -15,6 +15,6 @@ plt_qx(plt, x = 70)
 A named vector containing the probability of dying between 0 and age x in each year.
 }
 \description{
-Given a life table, extract the probability of dying by a given age.
+Extract the probability of dying by a given age from a life table.
 }
 

@@ -11,8 +11,7 @@
 #' @return A list with the following entries
 #' \describe{
 #'   \item{model.weights:}{The weights used to combine models into the model average.}
-#'   \item{sample.summaries:}{A data frame with holding statistical summary information for age-specific death rates, life expectancy at birth and age 65, and probability of dying before age 70, calculated from the posterior draws.}
-#'   \item{samples:}{List containing posterior draws for death rates and life tables.}
+#'   \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}#'   \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
 #' }
 #' @examples
 #' data(maple.deaths)
@@ -77,19 +76,6 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
     if (verbose) message("Computing model average...")
     model.weights <- maple_model_weights(projection.errors)
 
-    # Rates
-    fitted.values.list <- split(
-        forecast.run.fits$fitted.values[-grep("model|year|age", names(forecast.run.fits$fitted.values))],
-        forecast.run.fits$fitted.values$model
-    )
-    stopifnot(names(fitted.values.list) == names(model.weights))
-
-    bma.fitted.values <- Reduce(`+`, Map(`*`, fitted.values.list, model.weights))
-    bma.fitted.values <- data.frame(subset(forecast.run.fits$fitted.values,
-                                           model == models[[1]]$name,
-                                           select = c("year", "age")),
-                                    bma.fitted.values)
-
     if (sum(round(model.weights * num.draws)) == num.draws) {
         model.draws <- round(model.weights * num.draws)
     } else {
@@ -112,7 +98,6 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
     bma.sample.summaries <- maple_sample_summaries(bma.samples)
 
     bma <- structure(list(model.weights = model.weights,
-                          fitted.values = bma.fitted.values,
                           sample.summaries = bma.sample.summaries,
                           samples = bma.samples),
                      class = "maple.bma")

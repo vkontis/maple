@@ -1,4 +1,4 @@
-#' Given a life table, extract the probability of dying by a given age.
+#' Extract the probability of dying by a given age from a life table.
 #' @param plt A life table calculated by maple_plt().
 #' @param x The age group for which to calculate probability of dying by. 
 #' @return A named vector containing the probability of dying between 0 and age x in each year.

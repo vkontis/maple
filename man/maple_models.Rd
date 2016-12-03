@@ -16,11 +16,11 @@ maple_models(fixed.prec = 0.001, gamma.shape = 1, gamma.rate = 0.001)
 \value{
 A list of forecasting models. Each model is a list with the following entries
 \describe{
-  \item{name:}{A short name to identify the model.}
-  \item{desc:}{A description of the model.}
-  \item{fml:}{(only for models fitted in INLA) The formula passed to INLA when running the model.}
-  \item{likelihood.weight.rate:}{(only for weighted likelihood models) The rate used when calculating the likelihood weights. See ?calc_likelihood_weights for more details.}
-  \item{num.pcs:}{(only for Lee-Carter models) The number of principal components.}
+  \item{name}{A short name to identify the model.}
+  \item{desc}{A description of the model.}
+  \item{fml}{(only for models fitted in INLA) The formula passed to INLA when running the model.}
+  \item{likelihood.weight.rate}{(only for weighted likelihood models) The rate used when calculating the likelihood weights. See ?calc_likelihood_weights for more details.}
+  \item{num.pcs}{(only for Lee-Carter models) The number of principal components.}
 }
 }
 \description{

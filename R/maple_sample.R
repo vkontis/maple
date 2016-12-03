@@ -18,9 +18,8 @@ maple_sample.inla <- function(model.fit, num.draws, ax = NULL, ...) {
                     colnames(rates.m) <- unique(model.fit$.args$data$year)
                     rates.m
                   })
-    l <- lapply(rate.draws, maple_plt, ax = ax, full.table = FALSE)
-    class(l) <- c(class(l), "inla.samples")
-    l
+    structure(lapply(rate.draws, maple_plt, ax = ax, full.table = FALSE),
+              class = "inla.samples")
 }
 
 maple_sample.lc <- function(model.fit, num.draws, ax = NULL, ...) {
@@ -38,7 +37,6 @@ maple_sample.lc <- function(model.fit, num.draws, ax = NULL, ...) {
                         colnames(m) <- colnames(model.fit$logrates)
                         m
                     })
-    l <- lapply(rate.draws, maple_plt, ax = ax, full.table = FALSE)
-    class(l) <- c(class(l), "lc.samples")
-    l
+    structure(lapply(rate.draws, maple_plt, ax = ax, full.table = FALSE), 
+              class = "lc.samples")
 }
