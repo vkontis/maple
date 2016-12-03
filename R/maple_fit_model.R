@@ -25,6 +25,7 @@ maple_fit_model <- function(model, deaths, population, forecast.horizon, num.thr
     UseMethod("maple_fit_model")
 }
 
+#' @export
 maple_fit_model.inla.model <- function(model, deaths, population, forecast.horizon,
                                        num.threads = inla.getOption("num.threads"), ...) {
     inla.dat <- prep_inla_dat(deaths = deaths,
@@ -51,6 +52,7 @@ maple_fit_model.inla.model <- function(model, deaths, population, forecast.horiz
     fit
 }
 
+#' @export
 maple_fit_model.lc.model <- function(model, deaths, population, forecast.horizon, ...) {
     ages <- as.numeric(rownames(deaths))
     years <- as.numeric(colnames(deaths))

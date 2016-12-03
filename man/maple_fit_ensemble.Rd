@@ -2,7 +2,7 @@
 % Please edit documentation in R/maple_fit_ensemble.R
 \name{maple_fit_ensemble}
 \alias{maple_fit_ensemble}
-\title{Fit an ensemble of models}
+\title{Fit an ensemble of models.}
 \usage{
 maple_fit_ensemble(deaths, population, forecast.horizon,
   models = maple_models(), num.draws = 1000, ax = NULL,
@@ -35,6 +35,6 @@ A list with the following entries
 }
 }
 \description{
-Fit an ensemble of models
+Fit an ensemble of models.
 }
 

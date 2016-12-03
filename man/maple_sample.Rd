@@ -2,7 +2,7 @@
 % Please edit documentation in R/maple_sample.R
 \name{maple_sample}
 \alias{maple_sample}
-\title{Generate posterior samples of death rates and life tables. For models fitted with INLA, this uses INLA's inla.posterion.sample() function. For Lee Carter models, it samples from the distribution of the fitted parameters, using the estimated mean and standard deviation.}
+\title{Generate posterior samples of death rates and life tables.}
 \usage{
 maple_sample(model.fit, num.draws, ax, ...)
 }
@@ -17,6 +17,9 @@ maple_sample(model.fit, num.draws, ax, ...)
 A list of life table draws, calculated using posterior samples of death rates.
 }
 \description{
-Generate posterior samples of death rates and life tables. For models fitted with INLA, this uses INLA's inla.posterion.sample() function. For Lee Carter models, it samples from the distribution of the fitted parameters, using the estimated mean and standard deviation.
+Generate posterior samples of death rates and life tables.
+}
+\note{
+For models fitted with INLA, this uses INLA's inla.posterion.sample() function. For Lee Carter models, it samples from the distribution of the fitted parameters, using the estimated mean and standard deviation.
 }
 

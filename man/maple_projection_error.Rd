@@ -2,11 +2,23 @@
 % Please edit documentation in R/maple_projection_error.R
 \name{maple_projection_error}
 \alias{maple_projection_error}
-\title{Calculate projection error}
+\title{Calculate projection error.}
 \usage{
 maple_projection_error(deaths, population, ax = NULL, fitted.rates)
 }
+\arguments{
+\item{deaths}{Deaths matrix; see ?maple for more details.}
+
+\item{population}{Population matrix; see ?maple for more details.}
+
+\item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
+
+\item{fitted.rates}{Model estimates of death rates.}
+}
+\value{
+Vector of projection errors, calculated as the difference between observed and estimated life expectancy at birth.
+}
 \description{
-Calculate projection error
+Calculate projection error.
 }
 

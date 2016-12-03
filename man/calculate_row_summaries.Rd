@@ -6,6 +6,12 @@
 \usage{
 calculate_row_summaries(m)
 }
+\arguments{
+\item{m}{Numeric matrix}
+}
+\value{
+Data frame containing row means, medians, standard deviations, 2.5th and 97.5th percentiles
+}
 \description{
 Given a matrix, calculate row summaries
 }

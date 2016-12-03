@@ -2,7 +2,7 @@
 % Please edit documentation in R/maple_plt.R
 \name{maple_plt}
 \alias{maple_plt}
-\title{Generate a period life table for the supplied inputs.}
+\title{Generate a period life table.}
 \usage{
 maple_plt(death.rates, ax = NULL, check.conv = FALSE, full.table = FALSE)
 }
@@ -19,7 +19,7 @@ maple_plt(death.rates, ax = NULL, check.conv = FALSE, full.table = FALSE)
 A period life table with death rates (mx), life expectancy (ex) and probability of dying (qx) for each age groupa and year.
 }
 \description{
-Generate a period life table for the supplied inputs.
+Generate a period life table.
 }
 \note{
 The ax for the open-ended age group 85+ is calculated using the Kannisto-Thatcher method [Thatcher et al, The survivor ratio method for estimating numbers at high ages, Demographic Research (6), 2002]. For age groups 5-9 to 80-84 the ax are calibrated using an iterative procedure described on p.47 of [Preston et al, Demography: measuring and modeling population processes, 2001].

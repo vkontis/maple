@@ -2,7 +2,7 @@
 % Please edit documentation in R/maple_sample_summaries.R
 \name{maple_sample_summaries}
 \alias{maple_sample_summaries}
-\title{Given a list of posterior samples of death rates and life tables, generate summaries for death rates, life expectancy at birth and at age 65, and probability of dying before age 70.}
+\title{Calculate summaries for death rates, life expectancy and probability of dying.}
 \usage{
 maple_sample_summaries(samples)
 }
@@ -10,15 +10,9 @@ maple_sample_summaries(samples)
 \item{samples}{Posterior sample draws produced with maple_sample().}
 }
 \value{
-A data frame containing the mean, median, sd and 95% credible interval, for the following metrics
-\describe{
-  \item{rate_0, ..., rate_85:}{Age-specific death rates for age groups 0-4, ..., 80-84 and 85+.}
-  \item{e0:}{Life expectancy at birth.}
-  \item{e65:}{Life expectancy at age 65.}
-  \item{q70:}{Probability of dying before age 70.}
-}
+A data frame containing the mean, median, sd, 2.5th and 97.5th percentiles of age-specific death rate, life expectancy and probability of dying in each year.
 }
 \description{
-Given a list of posterior samples of death rates and life tables, generate summaries for death rates, life expectancy at birth and at age 65, and probability of dying before age 70.
+Calculate summaries for death rates, life expectancy and probability of dying.
 }
 

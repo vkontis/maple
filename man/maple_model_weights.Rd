@@ -2,7 +2,7 @@
 % Please edit documentation in R/maple_model_weights.R
 \name{maple_model_weights}
 \alias{maple_model_weights}
-\title{Calculate model weights given their projection errors.}
+\title{Calculate model weights.}
 \usage{
 maple_model_weights(projection.errors)
 }
@@ -13,7 +13,7 @@ maple_model_weights(projection.errors)
 A vector of model weights.
 }
 \description{
-Calculate model weights given their projection errors.
+Calculate model weights.
 }
 \examples{
 maple_model_weights(c(0.1, 1, 10))
