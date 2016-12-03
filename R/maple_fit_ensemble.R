@@ -1,4 +1,4 @@
-#' Fit an ensemble of models
+#' Fit an ensemble of models.
 #' @param deaths Deaths matrix; see ?maple for more details.
 #' @param population Population matrix; see ?maple for more details.
 #' @param forecast.horizon The number of years to produce projections for.

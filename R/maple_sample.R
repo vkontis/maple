@@ -1,8 +1,9 @@
-#' Generate posterior samples of death rates and life tables. For models fitted with INLA, this uses INLA's inla.posterion.sample() function. For Lee Carter models, it samples from the distribution of the fitted parameters, using the estimated mean and standard deviation.
+#' Generate posterior samples of death rates and life tables.
 #' @param model.fit A model fitted using maple_fit_model().
 #' @param num.draws The number of samples.
 #' @param ax The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.
 #' @return A list of life table draws, calculated using posterior samples of death rates.
+#' @note For models fitted with INLA, this uses INLA's inla.posterion.sample() function. For Lee Carter models, it samples from the distribution of the fitted parameters, using the estimated mean and standard deviation.
 #' @export
 maple_sample <- function(model.fit, num.draws, ax, ...) {
     UseMethod("maple_sample")

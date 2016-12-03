@@ -18,7 +18,8 @@ maple_models <- function(fixed.prec = 0.001,
                         gamma.shape = 1,
                         gamma.rate = 1e-3) {
 
-    hpr <- paste0('list(prec = list(prior = "loggamma", param = c(', gamma.shape, ', ', gamma.rate, ')))')
+    hpr <- paste0('list(prec = list(prior = "loggamma", param = c(', 
+                  gamma.shape, ', ', gamma.rate, ')))')
 
     models <- list(
         list(

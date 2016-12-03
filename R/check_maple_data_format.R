@@ -1,3 +1,4 @@
+#' Check arguments are in the desired format: 18xN matrices with column names corresponding to years
 check_maple_data_format <- function(...) {
     l <- list(...)
     l <- Filter(Negate(is.null), l)
@@ -5,9 +6,8 @@ check_maple_data_format <- function(...) {
         stop("Data must be provided in matrix form.")
     }
     if (!all(sapply(l, function(x) dim(x) == dim(l[[1]])))) {
-        stop("Deaths, population and 5ax values must have the same dimensions.")
+        stop("Deaths, population and ax values must have the same dimensions.")
     }
-    
     for (m in l) {
         if (nrow(m) != 18) {
             stop("Data matrices must consist of 18 rows, corresponding to age groups 0, 5,..., 80, 85+.")
