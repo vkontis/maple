@@ -7,16 +7,15 @@
 fitted_rates_matrix(model.fit)
 }
 \arguments{
-\item{model.fit}{A model fitted by INLA or Lee-Carter methods.}
+\item{model.fit}{A model fitted by maple_fit_model.}
 }
 \value{
-A matrix containing death rate model fits, with rows corresponding to age groups and columns to years.
+A matrix containing the estimated death rates, with rows corresponding to age groups and columns to years.
 }
 \description{
 A convenience function to extract the mortality matrix from a model fit.
 }
 \examples{
 x <- maple_fit_model(maple_models()[[20]], deaths = maple.deaths, population = maple.population, forecast.horizon = 5)
-fitted_rates_matrix(x)
 }
 

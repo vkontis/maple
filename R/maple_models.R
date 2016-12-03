@@ -1,19 +1,19 @@
 #' Generate a list of forecasting models.
-#' @export
 #' @param fixed.prec The precision on the fixed effects (common intercept and slope) normal priors.
 #' @param gamma.shape The shape parameter for the loggamma prior on the random effects. See ?INLA::inla.models for more details.
 #' @param gamma.rate The rate (inverse scale) parameter for the loggamma prior on the random effects. See ?INLA::inla.models for more details.
 #' @return A list of forecasting models. Each model is a list with the following entries
 #' \describe{
-#'   \item{name:}{A short name to identify the model.}
-#'   \item{desc:}{A description of the model.}
-#'   \item{fml:}{(only for models fitted in INLA) The formula passed to INLA when running the model.}
-#'   \item{likelihood.weight.rate:}{(only for weighted likelihood models) The rate used when calculating the likelihood weights. See ?calc_likelihood_weights for more details.}
-#'   \item{num.pcs:}{(only for Lee-Carter models) The number of principal components.}
+#'   \item{name}{A short name to identify the model.}
+#'   \item{desc}{A description of the model.}
+#'   \item{fml}{(only for models fitted in INLA) The formula passed to INLA when running the model.}
+#'   \item{likelihood.weight.rate}{(only for weighted likelihood models) The rate used when calculating the likelihood weights. See ?calc_likelihood_weights for more details.}
+#'   \item{num.pcs}{(only for Lee-Carter models) The number of principal components.}
 #' }
-#' @examples 
+#' @examples
 #' maple_models()[c(1, 20)]
 #' maple_models(fixed.prec = 1e-5, gamma.shape = .1, gamma.rate = .1)
+#' @export
 maple_models <- function(fixed.prec = 0.001,
                         gamma.shape = 1,
                         gamma.rate = 1e-3) {
@@ -189,7 +189,7 @@ maple_models <- function(fixed.prec = 0.001,
     lc.models <- lapply(seq(5), function(n) {
         m <- list(
             name = paste0("LC_", n, "PC"),
-            desc = paste0("Lee-Carter model with ", n, " principal component", 
+            desc = paste0("Lee-Carter model with ", n, " principal component",
                     ifelse(n > 1, "s", ""), "."),
             num.pcs = n
         )

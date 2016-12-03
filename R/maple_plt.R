@@ -1,20 +1,21 @@
-#' Generate a period life table for the supplied inputs. The ax for the open-ended age group 85+ is calculated using the Kannisto-Thatcher method [Thatcher et al, The survivor ratio method for estimating numbers at high ages, Demographic Research (6), 2002]. For age groups 5-9 to 80-84 the ax are calibrated using an iterative procedure described on p.47 of [Preston et al, Demography: measuring and modeling population processes, 2001].
-#' @export
-#' @param death.rates A matrix of death rates, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+.
-#' @param ax The number of years lived on average by those who die in their current age group. For example, if all deaths in the age group 60-64 happened exactly at the middle of the age group, this would be equal to 2.5.
-#' @param check.conv If TRUE, it will test that the iterative procedure to estimate ax (see above) has converged.
-#' @param full.table If TRUE, returns all the columns of the period life table (see below).
-#' @return A period life table with death rates, life expectancies and probability of dying.
+#' Generate a period life table for the supplied inputs.
+#' @param death.rates A matrix of death rates, with 18 rows, one for each 5-year age group 0-4, ..., 80-84, 85+ and one column for each year.
+#' @param ax A matrix (in the same row/column format as death.rates) containing the number of years lived on average in the current age group, by those who die in each age group. For example, if all deaths in the age group 60-64 happened exactly at the middle of the age group, this would be equal to 2.5. If the number of columns ax is smaller than that of death.rates, the values in the last column are repeated for all missing columns. This is useful when calculating life tables for death rate projections; the ax values for the last year of data will be used to calculate the life tables for all future years. If this matrix is not supplied, the assumed numbers are 0.5 for the first age group (0-4 years) and 2.5 for all other age groups. The ax values for all but the first age group are calibrated as described in Notes, so not supplying ax values should not have a large impact on the resulting estimates.
+#' @param check.conv If TRUE, it will test that the iterative procedure to estimate ax (see Notes) has converged.
+#' @param full.table If TRUE, returns all the columns of the period life table, instead of just death rates, life expectancy and probability of dying.
+#' @return A period life table with death rates (mx), life expectancy (ex) and probability of dying (qx) for each age groupa and year.
+#' @note The ax for the open-ended age group 85+ is calculated using the Kannisto-Thatcher method [Thatcher et al, The survivor ratio method for estimating numbers at high ages, Demographic Research (6), 2002]. For age groups 5-9 to 80-84 the ax are calibrated using an iterative procedure described on p.47 of [Preston et al, Demography: measuring and modeling population processes, 2001].
 #' @examples
 #' data(maple.deaths)
 #' data(maple.population)
 #' data(maple.ax)
 #' plt <- maple_plt(maple.deaths / maple.population, maple.ax)
+#' @export
 maple_plt <- function(death.rates, ax = NULL, check.conv = FALSE, full.table = FALSE) {
     year <- rep(as.numeric(colnames(death.rates)), each = nrow(death.rates))
     age <- rep(as.numeric(rownames(death.rates)), ncol(death.rates))
     mx <- as.vector(death.rates)
-    
+
     if (is.null(ax)) {
         ax <- ifelse(age == 0, .5, 2.5)
     } else if (ncol(ax) < ncol(death.rates)) {
@@ -36,7 +37,7 @@ maple_plt <- function(death.rates, ax = NULL, check.conv = FALSE, full.table = F
         ax <- ax[-na.idx]
     }
 
-    # Replace zero rates by a small number for numerical reasons
+    # Replace zero rates by a small number to avoid division by zero
     mx[mx == 0] <- 1e-10
     # Probability of dying between age x and x+4
     qx <- 5 * mx / (1 + (5 - ax) * mx)

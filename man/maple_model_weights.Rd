@@ -7,7 +7,7 @@
 maple_model_weights(projection.errors)
 }
 \arguments{
-\item{projection.errors}{A vector of projection errors of individual models.}
+\item{projection.errors}{A numeric vector of projection errors of individual models.}
 }
 \value{
 A vector of model weights.
