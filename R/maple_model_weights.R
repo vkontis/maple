@@ -1,4 +1,4 @@
-#' Calculate model weights given their projection errors.
+#' Calculate model weights.
 #' @param projection.errors A numeric vector of projection errors of individual models.
 #' @return A vector of model weights.
 #' @examples
