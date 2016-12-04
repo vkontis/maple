@@ -10,8 +10,10 @@
 #' @param verbose If TRUE (the default), print some information on progress fitting models, etc.
 #' @return A list with the following entries
 #' \describe{
-#'   \item{model.weights:}{The weights used to combine models into the model average.}
-#'   \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}#'   \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
+#'   \item{model.weights}{The weights used to combine models into the model average.}
+#'   \item{sample.summaries}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
+#'   \item{samples}{A list of life table draws, calculated using posterior samples of death rates.}
+#'   \item{individual.model.forecasts}{A data frame containing forecasts under individual models.}
 #' }
 #' @examples
 #' data(maple.deaths)
@@ -99,7 +101,8 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
 
     bma <- structure(list(model.weights = model.weights,
                           sample.summaries = bma.sample.summaries,
-                          samples = bma.samples),
+                          samples = bma.samples,
+                          individual.model.forecasts = forecast.run.fits$sample.summaries),
                      class = "maple.bma")
     if (verbose) message("Done.")
     bma
