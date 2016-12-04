@@ -19,7 +19,7 @@ maple(deaths, population, forecast.horizon, holdout, models = maple_models(),
 
 \item{models}{The individual models to be run and averaged; see ?maple_models for more details.}
 
-\item{num.draws}{The number of posterior samples of individual models to use for calculating statistical summaries.}
+\item{num.draws}{The number of posterior samples from individual model fits to use for producing the BMA estimates.}
 
 \item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
 

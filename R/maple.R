@@ -4,7 +4,7 @@
 #' @param forecast.horizon The number of years to produce projections for.
 #' @param holdout The number of years of data to hold out to calculate model weights.
 #' @param models The individual models to be run and averaged; see ?maple_models for more details.
-#' @param num.draws The number of posterior samples of individual models to use for calculating statistical summaries.
+#' @param num.draws The number of posterior samples from individual model fits to use for producing the BMA estimates.
 #' @param ax The number of years lived on average by those who die in their current age group. See ?maple_plt for more details. 
 #' @param num.threads The number of threads to use when running the models. This is passed to the INLA methods. If not specified, then all available threads are used.
 #' @param verbose If TRUE (the default), print some information on progress fitting models, etc.
