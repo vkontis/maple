@@ -4,7 +4,7 @@
 \alias{maple_fit_model}
 \title{Fit a single forecasting model.}
 \usage{
-maple_fit_model(model, deaths, population, forecast.horizon, num.threads, ...)
+maple_fit_model(model, deaths, population, forecast.horizon, num.threads)
 }
 \arguments{
 \item{model}{A forecasting model; see ?maple_models for more details.}

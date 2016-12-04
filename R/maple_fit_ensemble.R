@@ -10,9 +10,12 @@
 #' @param verbose If TRUE (the default), print some information on progress fitting models, etc.
 #' @return A list with the following entries
 #' \describe{
-#'   \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
-#'   \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
+#'   \item{sample.summaries}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
+#'   \item{samples}{A list of life table draws, calculated using posterior samples of death rates.}
+#'   \item{model.fits}{The fitted model objects, which can be used for futher analysis.}
 #' }
+#' @examples
+#' fits <- maple_fit_ensemble(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, models = maple_models()[c(1, 20)])
 #' @export
 maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = maple_models(),
                           num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"),

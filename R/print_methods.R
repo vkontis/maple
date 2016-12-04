@@ -12,7 +12,7 @@ print.maple.bma <- function(d) {
 print.inla.model <- function(m) {
     cat("Model", m$name, ": ")
     cat(m$desc, "\n")
-    cat("Formula:\n")
+    cat("INLA formula:\n")
     print(m$fml)
     if (!is.null(m$likelihood.weight.rate))
         cat("Weight rate:", m$likelihood.weight.rate, "\n")

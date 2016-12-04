@@ -30,11 +30,15 @@ maple_fit_ensemble(deaths, population, forecast.horizon,
 \value{
 A list with the following entries
 \describe{
-  \item{sample.summaries:}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
-  \item{samples:}{A list of life table draws, calculated using posterior samples of death rates.}
+  \item{sample.summaries}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
+  \item{samples}{A list of life table draws, calculated using posterior samples of death rates.}
+  \item{model.fits}{The fitted model objects, which can be used for futher analysis.}
 }
 }
 \description{
 Fit an ensemble of models.
+}
+\examples{
+fits <- maple_fit_ensemble(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, models = maple_models()[c(1, 20)])
 }
 

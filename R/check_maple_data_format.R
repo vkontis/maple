@@ -10,10 +10,13 @@ check_maple_data_format <- function(...) {
     }
     for (m in l) {
         if (nrow(m) != 18) {
-            stop("Data matrices must consist of 18 rows, corresponding to age groups 0, 5,..., 80, 85+.")
+            stop("Data matrices must consist of 18 rows, corresponding to age groups 0-4, 5-9,..., 80-84 and 85+.")
         }
         if (!all(as.integer(colnames(m)) == colnames(m))) {
             stop("Column names of data matrices data must be set to the years of data.")
+        }
+        if (!all(colnames(m) == sort(as.integer(colnames(m))))) {
+            stop("Columns of data matrices must be sorted in increasing order of years.")
         }
     }
 }
