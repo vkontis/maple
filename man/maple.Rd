@@ -19,7 +19,7 @@ maple(deaths, population, forecast.horizon, holdout, models = maple_models(),
 
 \item{models}{The individual models to be run and averaged; see ?maple_models for more details.}
 
-\item{num.draws}{The number of posterior draws to sample and use for calculating statistical summaries.}
+\item{num.draws}{The number of posterior samples of individual models to use for calculating statistical summaries.}
 
 \item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
 
@@ -38,6 +38,9 @@ A list with the following entries
 }
 \description{
 Produce model averaged projections of death rates and life expectancy.
+}
+\note{
+The maximum possible number of BMA samples is taken, depending on the model weights. For example if num.draws == 1000 and there are 5 models with weights 0.25, 0.2, 0.2, 0.2, and 0.15, the code will try to use all draws from the first model (with largest weight) and a number of draws from the remaining models inversely proportional to their weights (800, 800, 800, 600).
 }
 \examples{
 data(maple.deaths)
