@@ -20,7 +20,22 @@
 maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = maple_models(),
                           num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"),
                           verbose = TRUE) {
-
+    
+    check_maple_data_format(deaths, population, ax)
+    
+    if (is.null(rownames(deaths))) {
+        message("Death rates matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
+        rownames(deaths) <- seq(0, 85, 5)
+    }
+    if (is.null(rownames(population))) {
+        message("Population matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
+        rownames(population) <- seq(0, 85, 5)
+    }
+    if (!is.null(ax) && is.null(rownames(ax))) {
+        message("ax values matrix row names are missing; assuming they match age groups 0-4, 5-9, ..., 80-84, 85+.")
+        rownames(ax) <- seq(0, 85, 5)
+    }
+    
     model.fits <- structure(lapply(seq_along(models), function(m) {
             if (verbose) message("Fitting model ", models[[m]]$name, "...")
             tryCatch(maple_fit_model(model = models[[m]],
