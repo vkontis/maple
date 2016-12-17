@@ -33,7 +33,7 @@ A list with the following entries
   \item{model.weights}{The weights used to combine models into the model average.}
   \item{sample.summaries}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
   \item{samples}{A list of life table draws, calculated using posterior samples of death rates.}
-  \item{individual.model.forecasts}{A data frame containing forecasts under individual models.}
+  \item{individual.model.sample.summaries}{A data frame containing predictions under individual models.}
 }
 }
 \description{

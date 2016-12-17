@@ -5,7 +5,7 @@
 #' @param holdout The number of years of data to hold out to calculate model weights.
 #' @param models The individual models to be run and averaged; see ?maple_models for more details.
 #' @param num.draws The number of posterior samples from individual model fits to use for producing the BMA estimates.
-#' @param ax The number of years lived on average by those who die in their current age group. See ?maple_plt for more details. 
+#' @param ax The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.
 #' @param num.threads The number of threads to use when running the models. This is passed to the INLA methods. If not specified, then all available threads are used.
 #' @param verbose If TRUE (the default), print some information on progress fitting models, etc.
 #' @return A list with the following entries
@@ -13,7 +13,7 @@
 #'   \item{model.weights}{The weights used to combine models into the model average.}
 #'   \item{sample.summaries}{A data frame holding statistical summary information for age-specific death rates, life expectancy and probability of dying, calculated from the posterior draws.}
 #'   \item{samples}{A list of life table draws, calculated using posterior samples of death rates.}
-#'   \item{individual.model.forecasts}{A data frame containing forecasts under individual models.}
+#'   \item{individual.model.sample.summaries}{A data frame containing predictions under individual models.}
 #' }
 #' @note The maximum possible number of BMA samples is taken, depending on the model weights. For example if num.draws == 1000 and there are 5 models with weights 0.25, 0.2, 0.2, 0.2, and 0.15, the code will try to use all draws from the first model (with largest weight) and a number of draws from the remaining models inversely proportional to their weights (800, 800, 800, 600).
 #' @examples
@@ -84,7 +84,7 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
     draw.idx <- lapply(seq_along(model.draws), function(i) {
         sample(num.draws, model.draws[i], replace = FALSE)
     })
-    
+
     bma.samples <- unlist(
         lapply(seq_along(forecast.run.fits$samples),
                function(i) forecast.run.fits$samples[[i]][draw.idx[[i]]]),
@@ -95,9 +95,8 @@ maple <- function(deaths, population, forecast.horizon, holdout, models = maple_
     bma <- structure(list(model.weights = model.weights,
                           sample.summaries = bma.sample.summaries,
                           samples = bma.samples,
-                          individual.model.forecasts = forecast.run.fits$sample.summaries),
+                          individual.model.sample.summaries = forecast.run.fits$sample.summaries),
                      class = "maple.bma")
     if (verbose) message("Done.")
     bma
 }
-

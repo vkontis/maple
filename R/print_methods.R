@@ -1,7 +1,7 @@
 #' @export
 print.maple.bma <- function(d) {
-    cat("Model averaged projections of mortality and life expectancy between ", 
-        paste(range(bma$sample.summaries$year), collapse = " and "), ".\n", sep = "")
+    cat("Model averaged projections of mortality and life expectancy between ",
+        paste(range(d$sample.summaries$year), collapse = " and "), ".\n", sep = "")
     cat("Weights of models averaged:\n")
     print(d$model.weights)
     invisible(d)
