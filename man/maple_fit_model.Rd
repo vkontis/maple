@@ -37,6 +37,7 @@ For Lee Carter models, a list is returned with the following entries
 Fit a single forecasting model.
 }
 \examples{
-maple_fit_model(maple_models()[[1]], deaths = maple.deaths, population = maple.population, forecast.horizon = 20)
+maple_fit_model(maple_models()[[1]], deaths = maple.deaths,
+                population = maple.population, forecast.horizon = 20)
 }
 

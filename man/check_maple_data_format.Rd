@@ -6,6 +6,9 @@
 \usage{
 check_maple_data_format(...)
 }
+\arguments{
+\item{...}{Objects to be checked}
+}
 \description{
 Check arguments are in the desired format: 18xN matrices with column names corresponding to years
 }

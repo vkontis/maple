@@ -21,11 +21,9 @@ maple_fit_ensemble(deaths, population, forecast.horizon,
 
 \item{ax}{The number of years lived on average by those who die in their current age group. See ?maple_plt for more details.}
 
-\item{num.threads}{Number of threads passed to INLA; see ?maple for more details.}
+\item{num.threads}{The number of threads passed to INLA; see ?maple for more details.}
 
 \item{verbose}{If TRUE (the default), print some information on progress fitting models, etc.}
-
-\item{num.threads}{The number of threads passed to INLA; see ?maple for more details.}
 }
 \value{
 A list with the following entries
@@ -39,6 +37,7 @@ A list with the following entries
 Fit an ensemble of models.
 }
 \examples{
-fits <- maple_fit_ensemble(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, models = maple_models()[c(1, 20)])
+fits <- maple_fit_ensemble(deaths = maple.deaths, population = maple.population,
+                           forecast.horizon = 20, models = maple_models()[c(1, 20)])
 }
 

@@ -19,7 +19,8 @@
 #'   \item{forecast.horizon}{The number of years forecast ahead.}
 #' }
 #' @examples
-#' maple_fit_model(maple_models()[[1]], deaths = maple.deaths, population = maple.population, forecast.horizon = 20)
+#' maple_fit_model(maple_models()[[1]], deaths = maple.deaths,
+#'                 population = maple.population, forecast.horizon = 20)
 #' @export
 maple_fit_model <- function(model, deaths, population, forecast.horizon, num.threads) {
     UseMethod("maple_fit_model")

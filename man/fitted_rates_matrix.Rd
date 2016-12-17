@@ -16,7 +16,8 @@ A matrix containing the estimated mean death rates, with rows corresponding to a
 A convenience function to extract the mortality matrix from a model fit.
 }
 \examples{
-x <- maple_fit_model(maple_models()[[20]], deaths = maple.deaths, population = maple.population, forecast.horizon = 5)
+x <- maple_fit_model(maple_models()[[20]], deaths = maple.deaths,
+                     population = maple.population, forecast.horizon = 5)
 fitted_rates_matrix(x)
 }
 

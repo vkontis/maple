@@ -2,7 +2,6 @@
 #' @param deaths Deaths matrix; see ?maple for more details.
 #' @param population Population matrix; see ?maple for more details.
 #' @param forecast.horizon The number of years to produce projections for.
-#' @param num.threads Number of threads passed to INLA; see ?maple for more details.
 #' @param models The individual models to be run; see ?maple_models for more details.
 #' @param num.draws The number of posterior draws to sample and use for calculating statistical summaries.
 #' @param ax The number of years lived on average by those who die in their current age group. See ?maple_plt for more details. 
@@ -15,7 +14,8 @@
 #'   \item{model.fits}{The fitted model objects, which can be used for futher analysis.}
 #' }
 #' @examples
-#' fits <- maple_fit_ensemble(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, models = maple_models()[c(1, 20)])
+#' fits <- maple_fit_ensemble(deaths = maple.deaths, population = maple.population,
+#'                            forecast.horizon = 20, models = maple_models()[c(1, 20)])
 #' @export
 maple_fit_ensemble <- function(deaths, population, forecast.horizon, models = maple_models(),
                           num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"),

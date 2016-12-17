@@ -21,7 +21,9 @@
 #' data(maple.population)
 #' data(maple.ax)
 #' models <- maple_models()[c(1, 20)]
-#' bma <- maple(deaths = maple.deaths, population = maple.population, forecast.horizon = 20, holdout = 13, models = models, ax = maple.ax)
+#' bma <- maple(deaths = maple.deaths, population = maple.population,
+#'              forecast.horizon = 20, holdout = 13, models = models,
+#'              ax = maple.ax)
 #' @export
 maple <- function(deaths, population, forecast.horizon, holdout, models = maple_models(),
                   num.draws = 1000, ax = NULL, num.threads = inla.getOption("num.threads"),

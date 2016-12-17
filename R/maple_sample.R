@@ -5,12 +5,12 @@
 #' @return A list of life table draws, calculated using posterior samples of death rates.
 #' @note For models fitted with INLA, this uses INLA's inla.posterion.sample() function. For Lee Carter models, it samples from the distribution of the fitted parameters, using the estimated mean and standard deviation.
 #' @export
-maple_sample <- function(model.fit, num.draws, ax, ...) {
+maple_sample <- function(model.fit, num.draws, ax) {
     UseMethod("maple_sample")
 }
 
 #' @export
-maple_sample.inla <- function(model.fit, num.draws, ax = NULL, ...) {
+maple_sample.inla <- function(model.fit, num.draws, ax = NULL) {
     log.rate.draws <- inla.posterior.sample(num.draws, model.fit)
     rate.draws <- lapply(log.rate.draws, function(draw) {
                     rates <- exp(draw$latent[grep("Predictor", rownames(draw$latent))])
@@ -25,7 +25,7 @@ maple_sample.inla <- function(model.fit, num.draws, ax = NULL, ...) {
 }
 
 #' @export
-maple_sample.lc <- function(model.fit, num.draws, ax = NULL, ...) {
+maple_sample.lc <- function(model.fit, num.draws, ax = NULL) {
 	forecast.horizon <- model.fit$forecast.horizon
     log.rate.draws <- replicate(num.draws,
                        model.fit$alphas + Reduce(`+`, lapply(seq(model.fit$num.pcs),

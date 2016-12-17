@@ -1,4 +1,5 @@
 #' Check arguments are in the desired format: 18xN matrices with column names corresponding to years
+#' @param ... Objects to be checked
 check_maple_data_format <- function(...) {
     l <- list(...)
     l <- Filter(Negate(is.null), l)

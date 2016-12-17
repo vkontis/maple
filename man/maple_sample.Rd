@@ -4,7 +4,7 @@
 \alias{maple_sample}
 \title{Generate posterior samples of death rates and life tables.}
 \usage{
-maple_sample(model.fit, num.draws, ax, ...)
+maple_sample(model.fit, num.draws, ax)
 }
 \arguments{
 \item{model.fit}{A model fitted using maple_fit_model().}
