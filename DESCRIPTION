@@ -1,14 +1,14 @@
 Package: maple
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends:
-    R (>= 3.3.2)
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
-Imports:
-    INLA,
-    parallel
+Type: Package
+Title: Model averaged projections of life expectancy
+Version: 0.1
+Authors@R: c(
+    person("Vasilis", "Kontis", , "v.kontis@imperial.ac.uk", c("aut", "cre")),
+    person("James", "Bennett", "E", "umahx99@imperial.ac.uk", "aut"),
+    person("Majid", "Ezzati", , " majid.ezzati@imperial.ac.uk", "aut")
+    )
+Description: Functions to fit statistical models to demographic data and forecast future mortality.
+License: GPL-3 + file LICENSE
+LazyData: TRUE
+Depends: R (>= 2.10), INLA
 RoxygenNote: 5.0.1
