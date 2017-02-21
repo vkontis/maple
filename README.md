@@ -1,8 +1,8 @@
 # maple
 
-Welcome to maple: model averaged projections of life expectancy.
+Welcome to __maple__: model averaged projections of life expectancy.
 
-maple is an R package for fitting statistical models on demographic data to produce projections of death rates and life expectancy. It contains the code used in [V. Kontis, J.E. Bennett, C.D. Mathers, G. Li, K. Foreman, M. Ezzati, Future life expectancy in 35 industrialised countries: projections with a Bayesian model ensemble, Lancet (2017), doi: 10.1016/S0140-6736(16)32381-9](http://dx.doi.org/10.1016/S0140-6736(16)32381-9).  
+__maple__ is an R package for fitting statistical models on demographic data to produce projections of death rates and life expectancy. It contains the code used in [V. Kontis, J.E. Bennett, C.D. Mathers, G. Li, K. Foreman, M. Ezzati, Future life expectancy in 35 industrialised countries: projections with a Bayesian model ensemble, Lancet (2017), doi: 10.1016/S0140-6736(16)32381-9](http://dx.doi.org/10.1016/S0140-6736(16)32381-9).  
 
 ## Prerequisites
 
