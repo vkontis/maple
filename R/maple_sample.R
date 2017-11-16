@@ -32,7 +32,7 @@ maple_sample.lc <- function(model.fit, num.draws, ax = NULL) {
                            function(i) outer(model.fit$betas[i, ],
                                              model.fit$gammas.pred[[i]]$pred +
                                          cumsum(rnorm(forecast.horizon,
-                                                      sd = model.fit$gammas.fit[[i]]$sigma2))))),
+                                                      sd = sqrt(model.fit$gammas.fit[[i]]$sigma2)))))),
                        simplify = FALSE)
     in.sample.fit <- model.fit$rate[, seq_len(ncol(model.fit$gammas))]
     rate.draws <- lapply(log.rate.draws, function(x) {
