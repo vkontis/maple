@@ -4,8 +4,8 @@
 #' @return A named vector containing the probability of dying between 0 and age x in each year.
 #' @export
 plt_qx <- function(plt, x = 70) { 
-    if (!all(c("age", "year", "ex") %in% names(plt))) {
-        stop("Life table must include 'age', 'year', 'ex' columns.")
+    if (!all(c("age", "year", "qx") %in% names(plt))) {
+        stop("Life table must include 'age', 'year', 'qx' columns.")
     }
     
     calculate_pod <- function(m) {
